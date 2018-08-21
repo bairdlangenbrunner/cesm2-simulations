@@ -1,0 +1,35 @@
+for FHIST
+=========
+surface_dataset = surfdata_0.9x1.25_78pfts_CMIP6_simyr1850_c170824.nc
+- 12 months long
+initial_condition_dataset = b.e20.BHIST.f09_g17.20thC.297_01_v2.clm2.r.1979-01-01-00000.nc (restart files at 1979-01-01)
+PFT_physiological_constants_dataset = clm5_params.c171117.nc
+
+for F2000climo
+==============
+surface_dataset = surfdata_0.9x1.25_78pfts_CMIP6_simyr2000_c170824.nc
+- 12 months long
+initial_conditions_dataset = b.e20.BHIST.f09_g17.20thC.297_01_v2.clm2.r.2000-01-01-00000.nc
+
+for FEQUINOX
+============
+surface_dataset = surfdata_0.9x1.25_16pfts_Irrig_CMIP6_simyr2000_c170824.nc
+initial_condition_dataset = finidat_interp_dest.nc
+
+for FEQUINOXNOCROP
+==================
+surface_dataset = surfdata_0.9x1.25_16pfts_Irrig_CMIP6_simyr2000_c170824.nc
+- 12 months long
+initial_condition_dataset = finidat_interp_dest.nc
+PFT_physiological_constants_dataset = clm5_params.c171117.nc
+
+
+
+surface_dataset LOCATION
+/glade/p/cesmdata/inputdata/lnd/clm2/surfdata_map
+
+pft physiological constants dataset LOCATION
+/glade/p/cesmdata/inputdata/lnd/clm2/paramdata
+
+within surfdata (78, 2000)
+map_pft_filename = map_0.25x0.25_MODIS_to_0.9x1.25_nomask_aave_da_c170321.nc

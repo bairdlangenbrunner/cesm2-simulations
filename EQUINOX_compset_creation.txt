@@ -1,0 +1,83 @@
+Try adding this line:
+
+<value compset="EQUINOX"          grid=".+"                             >/glade2/work/baird/sst_HadOIBl_bc_1x1_2000climo_c180511_ncra_climatology.nc</value>
+
+
+---> looks like the above works and you can just force the model with a single month...
+
+***and***
+
+  <compset>
+    <alias>FEQUINOX</alias>
+    <lname>EQUINOX_CAM60_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_CISM2%NOEVOLVE_SWAV</lname>
+    <science_support grid="f09_f09_mg17"/>
+  </compset>
+  
+  
+to the CAM-specific compset configuration file:
+/glade2/work/baird/cesm2_models/cesm2_0_0/components/cam/cime_config/config_compsets.xml
+
+
+********************
+
+Then add this:
+
+<value compset="EQUINOX_"  >0001-01-01</value>
+
+to /glade2/work/baird/cesm2_models/cesm2_0_0/cime_config/config_compsets.xml
+
+********************
+
+
+
+
+
+
+********************
+********************
+
+now create an equivalent with satellite phenology CLM5
+
+  <compset>
+    <alias>FEQUINOXNOCROP</alias>
+    <lname>EQUINOX_CAM60_CLM50%SP_CICE%PRES_DOCN%DOM_MOSART_CISM2%NOEVOLVE_SWAV</lname>
+    <science_support grid="f09_f09_mg17"/>
+  </compset>
+
+
+to the CAM-specific compset configuration file:
+/glade2/work/baird/cesm2_models/cesm2_0_0/components/cam/cime_config/config_compsets.xml
+
+
+********************
+********************
+********************
+
+
+To create a 12 month ANNUAL (same-field) climatology:
+
+file comes from:
+/glade/p/cesmdata/inputdata/atm/cam/sst/sst_HadOIBl_bc_0.9x1.25_2000climo_c180511.nc
+
+ncra sst_HadOIBl_bc_0.9x1.25_2000climo_c180511.nc sst_HadOIBl_bc_1x1_2000climo_c180511_ncra_climatology.nc
+
+*** the above file (_ncra_climatology.nc) should be enough to run model... doesn't seem to need a 12 month time series, one month is enough ***
+
+then concatenate 12 months together
+
+ncrcat sst_HadOIBl_bc_1x1_2000climo_c180511_ncra_climatology.nc sst_HadOIBl_bc_1x1_2000climo_c180511_ncra_climatology.nc sst_HadOIBl_bc_1x1_2000climo_c180511_ncra_climatology.nc sst_HadOIBl_bc_1x1_2000climo_c180511_ncra_climatology.nc sst_HadOIBl_bc_1x1_2000climo_c180511_ncra_climatology.nc sst_HadOIBl_bc_1x1_2000climo_c180511_ncra_climatology.nc sst_HadOIBl_bc_1x1_2000climo_c180511_ncra_climatology.nc sst_HadOIBl_bc_1x1_2000climo_c180511_ncra_climatology.nc sst_HadOIBl_bc_1x1_2000climo_c180511_ncra_climatology.nc sst_HadOIBl_bc_1x1_2000climo_c180511_ncra_climatology.nc sst_HadOIBl_bc_1x1_2000climo_c180511_ncra_climatology.nc sst_HadOIBl_bc_1x1_2000climo_c180511_ncra_climatology.nc sst_HadOIBl_bc_1x1_2000climo_c180511_ncra_climatology_12months.nc
+
+then take those data and put them into a COPY of the original data:
+
+copy sst_HadOIBl_bc_0.9x1.25_2000climo_c180511.nc sst_HadOIBl_bc_0.9x1.25_2000climo_c180511_COPY.nc
+ncks -A -v SST_cpl sst_HadOIBl_bc_1x1_2000climo_c180511_ncra_climatology_12months.nc sst_HadOIBl_bc_0.9x1.25_2000climo_c180511_COPY.nc
+
+then copy over the time dimension
+ncks -A -v date sst_HadOIBl_bc_1x1_2000climo_c180511_ncra_climatology_12months.nc sst_HadOIBl_bc_0.9x1.25_2000climo_c180511_COPY.nc
+
+call it sst_HadOIBl_bc_0.9x1.25_2000climo_c180511_FEQUINOX.nc
+
+
+********************
+********************
+********************
